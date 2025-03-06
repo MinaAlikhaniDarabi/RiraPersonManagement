@@ -1,5 +1,6 @@
 ﻿using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
+using PersonManagementGrpcService.Helpers;
 using RiraPersonManagement;
 
 
@@ -38,20 +39,28 @@ public class PersonManagementService : PersonService.PersonServiceBase
     // CreatePerson: Creates a new person
     public override Task<PersonServiceResponse> CreatePerson(CreatePersonRequest request, ServerCallContext context)
     {
-        int newId = _persons.Count > 0 ? _persons.Max(p => p.Id) + 1 : 1;
+        if(request.Person==null)
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "person is required"));
 
+        var name = request.Person.Name;
+        var LastName = request.Person.LastName;
+        var nationalCode = request.Person.NationalCode;
+        var birthDate = request.Person.BirthDate;
+
+        IdentityHelper.ValidateNationalCode(nationalCode);
+
+        int newId = _persons.Count > 0 ? _persons.Max(p => p.Id) + 1 : 1;
         var newPerson = new Person
         {
             Id = newId,
-            Name = request.Person.Name,
-            LastName = request.Person.LastName,
-            NationalCode = request.Person.NationalCode,
-            BirthDate = request.Person.BirthDate
+            Name = name,
+            LastName = LastName,
+            NationalCode = nationalCode,
+            BirthDate = birthDate
         };
-
-        var person = _persons.FirstOrDefault(p => p.NationalCode == request.Person.NationalCode);
+        var person = _persons.FirstOrDefault(p => p.NationalCode == nationalCode);
         if(person!=null)           
-        throw new RpcException(new Status(StatusCode.NotFound, "person already added"));
+        throw new RpcException(new Status(StatusCode.AlreadyExists, "person already added"));
 
         _persons.Add(newPerson);
 
@@ -64,16 +73,29 @@ public class PersonManagementService : PersonService.PersonServiceBase
     // UpdatePerson: Updates an existing person
     public override Task<PersonServiceResponse> UpdatePerson(UpdatePersonRequest request, ServerCallContext context)
     {
-            var existingPerson = _persons.FirstOrDefault(p => p.Id == request.Person.Id);
+        if (request.Person == null)
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "person is required"));
+
+        var id = request.Person.Id;
+        var name = request.Person.Name;
+        var LastName = request.Person.LastName;
+        var nationalCode = request.Person.NationalCode;
+        var birthDate = request.Person.BirthDate;
+
+        IdentityHelper.ValidateNationalCode(nationalCode);
+
+        var existingPerson = _persons.FirstOrDefault(p => p.Id == request.Person.Id);
             if (existingPerson == null)
             {
                 throw new RpcException(new Status(StatusCode.NotFound, "Person not found"));
             }
 
-            existingPerson.Name = request.Person.Name;
-            existingPerson.LastName = request.Person.LastName;
-            existingPerson.NationalCode = request.Person.NationalCode;
-            existingPerson.BirthDate = request.Person.BirthDate;
+
+
+            existingPerson.Name = name;
+            existingPerson.LastName = LastName;
+            existingPerson.NationalCode = nationalCode;
+            existingPerson.BirthDate = birthDate;
 
             return Task.FromResult(new PersonServiceResponse
             {
