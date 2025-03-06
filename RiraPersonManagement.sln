@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonManagementGrpcService", "PersonManagementGrpcService\PersonManagementGrpcService.csproj", "{3D9DC9DA-DE7D-4CE1-BFB4-FDB9DDC4E65B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonManagementGrpcClient", "PersonManagementGrpcClient\PersonManagementGrpcClient.csproj", "{0C9BD069-1EB6-4DCB-BAC3-4358B9A5511C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3D9DC9DA-DE7D-4CE1-BFB4-FDB9DDC4E65B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D9DC9DA-DE7D-4CE1-BFB4-FDB9DDC4E65B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D9DC9DA-DE7D-4CE1-BFB4-FDB9DDC4E65B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D9DC9DA-DE7D-4CE1-BFB4-FDB9DDC4E65B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C9BD069-1EB6-4DCB-BAC3-4358B9A5511C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C9BD069-1EB6-4DCB-BAC3-4358B9A5511C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C9BD069-1EB6-4DCB-BAC3-4358B9A5511C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C9BD069-1EB6-4DCB-BAC3-4358B9A5511C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

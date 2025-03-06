@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/any.proto";
+
+option csharp_namespace = "RiraPersonManagement";
+
+package rira_person_management;
+
+message Person {
+  int32 id = 1;
+  string name = 2;
+  string last_name = 3;
+  string national_code = 4;
+  google.protobuf.Timestamp birth_date = 5;
+}
+
+message ErrorResponse {
+  string error_message = 1;
+  string error_code = 2;
+}
+
+message PersonServiceResponse {
+  oneof result {
+    google.protobuf.Any data = 1; 
+    ErrorResponse error = 2;     
+  }
+}
+
+message GetPersonResponse {
+  Person person = 1;
+}
+
+message GetAllPersonsResponse {
+  repeated Person persons = 1;
+}
+
+message CreatePersonResponse {
+  Person person = 1;
+}
+
+message UpdatePersonResponse {
+  Person person = 1;
+}
+
+message DeletePersonResponse {
+  bool success = 1;
+}
+
+service PersonService {
+  rpc GetPerson (GetPersonRequest) returns (PersonServiceResponse);
+  rpc GetAllPersons (google.protobuf.Empty) returns (PersonServiceResponse);
+  rpc CreatePerson (CreatePersonRequest) returns (PersonServiceResponse);
+  rpc UpdatePerson (UpdatePersonRequest) returns (PersonServiceResponse);
+  rpc DeletePerson (DeletePersonRequest) returns (PersonServiceResponse);
+}
+
+message GetPersonRequest {
+  int32 id = 1;
+}
+
+message CreatePersonRequest {
+  Person person = 1;
+}
+
+message UpdatePersonRequest {
+  Person person = 1;
+}
+
+message DeletePersonRequest {
+  int32 id = 1;
+}
