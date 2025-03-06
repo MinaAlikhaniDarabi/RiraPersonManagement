@@ -3,8 +3,6 @@ using Grpc.Net.Client;
 using RiraPersonManagement;
 using PersonManagementGrpcClient;
 
-
-
 class Program
 {
     static async Task Main(string[] args)
